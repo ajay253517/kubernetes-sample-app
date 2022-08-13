@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flask-pod
+  labels:
+    name: python-app
+    app: python
+spec:
+  containers:
+  - name: flask-python
+    image: ajay2012/python-flask:v1
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+    ports:
+      - containerPort: 8000

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-dep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-pod-dep
+  template:
+    metadata:
+      labels:
+        app: flask-pod-dep
+    spec:
+      containers:
+      - name: flask-pod-cont
+        image: ajay2012/python-flask:v2
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-svc
+spec:
+  type: NodePort
+  selector:
+    app: flask-pod-dep
+  ports:
+  - port: 8080
+    nodePort: 30007
